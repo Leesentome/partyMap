@@ -103,7 +103,7 @@ function backPath() {
       person.backPath.forEach(node => {
         const color = (node.transport === 'voiture') ? 'blue' : 'green'
         const icon = node.transport === 'voiture' ? blueIcon : greenIcon
-        const marker = L.marker(node.fromCoord, {icon: icon})
+        const marker = L.marker(node.toCoord, {icon: icon})
         marker.bindPopup(`<b>${person.name}</b><br>${node.startDate.toLocaleDateString()} ${node.startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}<br>${node.transport}`)
         pathLayer.addLayer(marker)
 
