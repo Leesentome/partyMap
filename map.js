@@ -43,7 +43,11 @@ const people = [
   { name: "Joachim"  , goPath: [
     {transport: 'stop', with: [], startDate: new Date("2025-09-12,15:00"), endDate: new Date("2025-09-12,19:00"), fromCoord: [43.582633, 7.118057], toCoord: partyLocation}
   ], backPath: null },
-  { name: "Maéva"    , goPath: null, backPath: null },
+  { name: "Maéva"    , goPath: [
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-12,18:00"), endDate: new Date("2025-09-13,02:00"), fromCoord: [50.6016089, 3.080874], toCoord: partyLocation}
+  ], backPath: [
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,16:00"), endDate: new Date("2025-09-15,00:00"), fromCoord: partyLocation, toCoord: [50.6016089, 3.080874]}
+  ] },
   { name: "Mel"      , goPath: null, backPath: null },
   { name: "Théo"     , goPath: [
     {transport: 'voiture', with: [], startDate: new Date("2025-09-12,12:00"), endDate: new Date("2025-09-12,13:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
