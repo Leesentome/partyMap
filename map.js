@@ -21,48 +21,117 @@ const greenIcon = new ColorIcon({iconUrl: 'https://raw.githubusercontent.com/poi
 
 // Party location marker
 const partyLocation = [45.060524, 5.346462]
-const partyMarker = L.marker(partyLocation, {icon: redIcon}).addTo(map)
-partyMarker.bindPopup("<b>🎉 Party Location 🎉</b>").openPopup()
-
 
 // People data
 const people = [
-  { name: "Adèle"    , path: null },
-  { name: "Berenice" , path: null },
-  { name: "Chloé"    , path: null },
-  { name: "Caro"     , path: null },
-  { name: "Corentin" , path: null },
-  { name: "Dorian"   , path: null },
-  { name: "Ekewoli"  , path: null },
-  { name: "Felix"    , path: [{transport: 'voiture', with: [], startDate: new Date("2025-09-12,17:30"), endDate: new Date("2025-09-12,19:30"), fromCoord: [46.060524, 5.346462], toCoord: partyLocation}] },
-  { name: "Florian"  , path: null },
-  { name: "Gabrielle", path: null },
-  { name: "Hugo"     , path: null },
-  { name: "Jana"     , path: null },
-  { name: "Joachim"  , path: null },
-  { name: "Maéva"    , path: null },
-  { name: "Mel"      , path: null },
-  { name: "Théo"     , path: null },
-  { name: "Yann"     , path: null }
+  { name: "Adèle"    , goPath: null, backPath: null },
+  { name: "Berenice" , goPath: null, backPath: null },
+  { name: "Chloé"    , goPath: null, backPath: null },
+  { name: "Caro"     , goPath: [
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-12,12:00"), endDate: new Date("2025-09-12,13:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
+  ], backPath: [
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,19:00"), endDate: new Date("2025-09-14,20:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
+  ]},
+  { name: "Corentin" , goPath: null, backPath: null },
+  { name: "Dorian"   , goPath: null, backPath: null },
+  { name: "Ekewoli"  , goPath: null, backPath: null },
+  { name: "Felix"    , goPath: null, backPath: null },
+  { name: "Florian"  , goPath: null, backPath: null },
+  { name: "Gabrielle", goPath: null, backPath: null },
+  { name: "Hugo"     , goPath: null, backPath: null },
+  { name: "Jana"     , goPath: null, backPath: null },
+  { name: "Joachim"  , goPath: [
+    {transport: 'stop', with: [], startDate: new Date("2025-09-12,15:00"), endDate: new Date("2025-09-12,19:00"), fromCoord: [43.582633, 7.118057], toCoord: partyLocation}
+  ], backPath: null },
+  { name: "Maéva"    , goPath: null, backPath: null },
+  { name: "Mel"      , goPath: null, backPath: null },
+  { name: "Théo"     , goPath: [
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-12,12:00"), endDate: new Date("2025-09-12,13:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
+  ], backPath: [
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,19:00"), endDate: new Date("2025-09-14,20:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
+  ]},
+  { name: "Yann"     , goPath: [
+    {transport: 'stop', with: [], startDate: new Date("2025-09-12,15:00"), endDate: new Date("2025-09-12,19:00"), fromCoord: [43.582633, 7.118057], toCoord: partyLocation}
+  ], backPath: null }
 ]
 
-// Plot each person
-people.forEach(person => {
-  if (person.path != null) {
-    person.path.forEach(node => {
-      const color = node.transport === 'voiture' ? 'blue' : 'green'
-      const icon = node.transport === 'voiture' ? blueIcon : greenIcon
-      const marker = L.marker(node.fromCoord, {icon: icon}).addTo(map)
-      marker.bindPopup(`<b>${person.name}</b><br>${node.startDate.toLocaleDateString()} ${node.startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}<br>${node.transport}`)
+const pathLayer = L.layerGroup().addTo(map)
 
+function goPath() {
+  pathLayer.clearLayers()
 
-      L.polyline([node.fromCoord, node.toCoord], {
-        color: color,
-        weight: 2,
-        dashArray: '4, 6'
-      }).addTo(map)
-    })
-    
+  const partyMarker = L.marker(partyLocation, {icon: redIcon})
+  partyMarker.bindPopup("<b>🎉 Party Location 🎉</b>").openPopup()
+  pathLayer.addLayer(partyMarker)
+
+  // Plot each person
+  people.forEach(person => {
+    if (person.goPath != null) {
+      person.goPath.forEach(node => {
+        const color = (node.transport === 'voiture') ? 'blue' : 'green'
+        const icon = node.transport === 'voiture' ? blueIcon : greenIcon
+        const marker = L.marker(node.fromCoord, {icon: icon})
+        marker.bindPopup(`<b>${person.name}</b><br>${node.startDate.toLocaleDateString()} ${node.startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}<br>${node.transport}`)
+        pathLayer.addLayer(marker)
+  
+        const polyline = L.polyline([node.fromCoord, node.toCoord], {
+          color: color,
+          weight: 2,
+          dashArray: '4, 6'
+        })
+        pathLayer.addLayer(polyline)
+      })
+      
+    }
+  })
+}
+
+function backPath() {
+  pathLayer.clearLayers()
+
+  const partyMarker = L.marker(partyLocation, {icon: redIcon})
+  partyMarker.bindPopup("<b>🎉 Party Location 🎉</b>").openPopup()
+  pathLayer.addLayer(partyMarker)
+
+  // Plot each person
+  people.forEach(person => {
+    if (person.backPath != null) {
+      person.backPath.forEach(node => {
+        const color = (node.transport === 'voiture') ? 'blue' : 'green'
+        const icon = node.transport === 'voiture' ? blueIcon : greenIcon
+        const marker = L.marker(node.fromCoord, {icon: icon})
+        marker.bindPopup(`<b>${person.name}</b><br>${node.startDate.toLocaleDateString()} ${node.startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}<br>${node.transport}`)
+        pathLayer.addLayer(marker)
+
+        const polyline = L.polyline([node.fromCoord, node.toCoord], {
+          color: color,
+          weight: 2,
+          dashArray: '4, 6'
+        })
+        pathLayer.addLayer(polyline)
+      })
+      
+    }
+  })
+}
+
+let state = 'go'
+goPath()
+
+const container = document.getElementById('go-back')
+const buttons = container.querySelectorAll('.button')
+const slider = container.querySelector('.slider')
+let selectedIndex = 0
+
+container.addEventListener('click', () => {
+  buttons.forEach(btn => btn.classList.toggle('selected'))
+  selectedIndex = selectedIndex === 0 ? 1 : 0
+  slider.style.top = selectedIndex === 0 ? '0%' : '50%'
+  state = state === 'go' ? 'back' : 'go'
+  if (state === 'go') {
+    goPath()
+  } else {
+    backPath()
   }
 })
 
@@ -71,9 +140,31 @@ const listContainer = document.getElementById("participant-list")
 people.forEach(person => {
   const clone = template.content.cloneNode(true)
   clone.querySelector(".name").textContent = person.name
-  if (person.path != null) {
-    const pathContainer = clone.querySelector(".path-container")
-    person.path.forEach(node => {
+  const pathContainer = clone.querySelector(".path-container")
+  if (person.goPath != null) {
+    person.goPath.forEach(node => {
+      const start = new Date("2025-09-12,12:00")
+      const end = new Date("2025-09-15,00:00")
+
+      const div = document.createElement("div")
+      div.className = 'event'
+      const color = node.transport === 'voiture' ? 'blue' : 'green'
+
+      div.style.left = `${Math.max(0, 100 * (node.startDate.valueOf() - start.valueOf()) / (end.valueOf() - start.valueOf()))}%`
+      div.style.right = `${Math.max(0, 100 - 100 * (node.endDate.valueOf() - start.valueOf()) / (end.valueOf() - start.valueOf()))}%`
+
+      div.style.backgroundColor = color
+      
+      const tooltip = document.createElement('span')
+      tooltip.className = 'tooltip'
+      tooltip.innerHTML = `${node.transport}<br>${node.startDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })} - ${node.endDate.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}`
+      div.appendChild(tooltip)
+
+      pathContainer.appendChild(div)
+    })
+  }
+  if (person.backPath != null) {
+    person.backPath.forEach(node => {
       const start = new Date("2025-09-12,12:00")
       const end = new Date("2025-09-15,00:00")
 

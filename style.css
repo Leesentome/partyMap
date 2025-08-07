@@ -24,6 +24,44 @@ h2 {
   z-index: -1;
 }
 
+#go-back {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: white;
+  border-radius: 1rem;
+  width: 10rem;
+  height: 4rem;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.button {
+  width: 100%;
+  text-align: center;
+  line-height: 2rem;
+  z-index: 1;
+  color: black;
+  transition: color 0.3 ease;
+  user-select: none;
+}
+.button.selected {
+  color: white;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: blue;
+  border-radius: 1rem;
+  transition: top 0.3s ease;
+  z-index: 0;
+}
+
 #calendar {
   position: absolute;
   top: calc(100% - 3rem);
