@@ -30,7 +30,7 @@ const people = [
   { name: "Caro"     , goPath: [
     {transport: 'voiture', with: [], startDate: new Date("2025-09-12,12:00"), endDate: new Date("2025-09-12,13:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
   ], backPath: [
-    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,19:00"), endDate: new Date("2025-09-14,20:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,19:00"), endDate: new Date("2025-09-14,20:30"), fromCoord: partyLocation, toCoord: [45.583909, 5.908755]}
   ]},
   { name: "Corentin" , goPath: null, backPath: null },
   { name: "Dorian"   , goPath: null, backPath: null },
@@ -52,7 +52,7 @@ const people = [
   { name: "Théo"     , goPath: [
     {transport: 'voiture', with: [], startDate: new Date("2025-09-12,12:00"), endDate: new Date("2025-09-12,13:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
   ], backPath: [
-    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,19:00"), endDate: new Date("2025-09-14,20:30"), fromCoord: [45.583909, 5.908755], toCoord: partyLocation}
+    {transport: 'voiture', with: [], startDate: new Date("2025-09-14,19:00"), endDate: new Date("2025-09-14,20:30"), fromCoord: partyLocation, toCoord: [45.583909, 5.908755]}
   ]},
   { name: "Yann"     , goPath: [
     {transport: 'stop', with: [], startDate: new Date("2025-09-12,15:00"), endDate: new Date("2025-09-12,19:00"), fromCoord: [43.582633, 7.118057], toCoord: partyLocation}
