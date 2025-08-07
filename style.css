@@ -30,7 +30,7 @@ h2 {
   right: 1rem;
   background-color: white;
   border-radius: 1rem;
-  width: 10rem;
+  width: 4rem;
   height: 4rem;
   display: flex;
   flex-direction: column;
@@ -92,8 +92,10 @@ h2 {
   padding: 3rem;
   min-height: 0;
   flex-grow: 1;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  width: fit-content;
 }
 
 #participant-list {
