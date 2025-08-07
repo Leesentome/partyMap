@@ -16,7 +16,23 @@
 
     <div id="calendar">
       <div id="handle">▲ Participants</div>
-      <div id="participant-list"></div>
+      <div class="participant-container">
+        <div class="participant-header">
+          <div class="participant-header-tick">Vendredi 12h</div>
+          <div class="participant-header-tick">Samedi 0h</div>
+          <div class="participant-header-tick">Samedi 12h</div>
+          <div class="participant-header-tick">Dimanche 0h</div>
+          <div class="participant-header-tick">Dimanche 12h</div>
+          <div class="participant-header-tick">Lundi 0h</div>
+        </div>
+        <template id="person-template">
+          <div class="participant">
+            <div class="name"></div>
+            <div class="path-container"></div>
+          </div>
+        </template>
+        <div id="participant-list"></div>
+      </div>
     </div>
 
     <!-- Leaflet JS -->
